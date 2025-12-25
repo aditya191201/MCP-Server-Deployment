@@ -1,6 +1,7 @@
 #server.py
-
-from mcp.server.fastmcp import FastMCP
+import io
+import pyautogui
+from mcp.server.fastmcp import FastMCP, Image
 
 mcp = FastMCP("Screenshot")
 
