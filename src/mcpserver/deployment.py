@@ -2,10 +2,17 @@
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("Demo")
+mcp = FastMCP("Screenshot")
 
-# Add an addition tool
 @mcp.tool()
-def add(a: int, b: int) -> int:
-    """Add two numbers"""
-    return a + b
+def capture_screenshot() -> Image:
+    """
+    Capture the current screen and return the image. Use this tool whenever the user requests a screenshot of their activity.
+    """
+
+    buffer = io.BytesIO()
+
+    # if the file exceeds ~1MB, it will be rejected by Claude
+    screenshot = pyautogui.screenshot()
+    screenshot.convert("RGB").save(buffer, format="JPEG", quality=60, optimize=True)
+    return Image(data=buffer.getvalue(), format="jpeg")
